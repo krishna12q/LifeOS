@@ -1,0 +1,64 @@
+/* Final Notes layout safeguards. Loaded after windows.css. */
+@media (min-width: 701px) {
+  .window--notes .notes-list {
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .window--notes .notes-list-items {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .window--notes .notes-list-items::-webkit-scrollbar {
+    display: none;
+  }
+
+  .window--notes .note-editor {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    padding-top: 42px;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .window--notes .note-title-input {
+    flex: 0 0 auto;
+    height: 1.35em;
+    min-height: 1.35em;
+    padding: 0;
+    line-height: 1.2;
+    box-sizing: content-box;
+  }
+
+  .window--notes .note-body-input {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .window--notes .note-body-input::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.notes-action--save {
+  width: 38px;
+  min-width: 38px;
+}
+
+.notes-action--save.is-saved {
+  background: rgba(125, 230, 184, .24);
+  border-color: rgba(152, 255, 204, .68);
+  box-shadow: 0 0 18px rgba(102, 238, 174, .3);
+}
+
+.note-title-input[readonly] {
+  cursor: default;
+}

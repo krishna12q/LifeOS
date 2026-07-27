@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LifeOS | Unlock</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', path='css/theme.css') }}?v=life-lock-04">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', path='css/layout.css') }}?v=life-lock-04">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', path='css/components.css') }}?v=life-lock-04">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', path='css/animations.css') }}?v=life-lock-04">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', path='css/login.css') }}?v=life-lock-05">
+</head>
+
+<body class="life-lockscreen">
+
+    <main class="life-shell" aria-label="LifeOS lock screen">
+
+        <!-- Desktop Preview -->
+        <section class="desktop-stage" aria-hidden="true">
+
+            <div class="desktop-orb desktop-orb--one"></div>
+            <div class="desktop-orb desktop-orb--two"></div>
+
+            <div class="desktop-window desktop-window--focus">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <div class="desktop-window__line"></div>
+
+                <div class="desktop-window__cards">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </div>
+
+            </div>
+
+            <div class="desktop-window desktop-window--side">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <div class="desktop-window__line"></div>
+
+            </div>
+
+            <div
+                class="desktop-clock-dock"
+                id="desktopClockDock">
+            </div>
+
+            <nav class="desktop-launcher">
+
+                <i class="fa-regular fa-calendar-days"></i>
+                <i class="fa-solid fa-list-check"></i>
+                <i class="fa-regular fa-note-sticky"></i>
+                <i class="fa-solid fa-robot"></i>
+                <i class="fa-solid fa-wallet"></i>
+
+            </nav>
+
+            <div class="desktop-taskbar">
+
+                <span class="desktop-taskbar__brand">
+                    life
+                </span>
+
+                <span class="desktop-taskbar__status">
+                    Workspace ready
+                </span>
+
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-regular fa-bell"></i>
+
+            </div>
+
+        </section>
+
+        <div class="lock-veil"></div>
+
+        <div class="lock-grain"></div>
+
+        <!-- Lock Screen -->
+        <section class="lock-content">
+
+            <header class="lock-meta">
+
+                <span
+                    class="lock-meta__mark"
+                    data-lifeos-wordmark>
+                    L
+                </span>
+
+                <span id="digital"></span>
+
+            </header>
+
+            <div class="clock-lockup">
+
+                <div
+                    class="clock life-clock"
+                    id="lifeClock"
+                    aria-label="Current time">
+
+                    <div class="ring"></div>
+
+                    <div class="clock-ticks"></div>
+
+                    <div
+                        class="hand"
+                        id="hour">
+                    </div>
+
+                    <div
+                        class="hand"
+                        id="minute">
+                    </div>
+
+                    <div
+                        class="hand"
+                        id="second">
+                    </div>
+
+                    <div class="dot"></div>
+
+                </div>
+
+                <p
+                    class="clock-date"
+                    id="date">
+                </p>
+
+            </div>
+
+            <!-- Login Panel -->
+
+            <section
+                class="unlock-panel card"
+                aria-labelledby="unlock-title">
+
+                <div class="unlock-panel__copy">
+
+                    <p class="eyebrow">
+                        LifeOS
+                    </p>
+
+                    <h1 id="unlock-title">
+                        Unlock your workspace.
+                    </h1>
+
+                    <p>
+                        Pick up exactly where your day left off.
+                    </p>
+
+                </div>
+
+                <form
+                    id="loginForm"
+                    action="/backendlogin"
+                    method="post"
+                    novalidate>
+
+                    <label class="field">
+
+                        <span class="sr-only">
+                            Username
+                        </span>
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            id="username"
+                            name="username"
+                            class="input"
+                            type="text"
+                            placeholder="Username"
+                            autocomplete="username"
+                            required>
+
+                    </label>
+
+                    <label class="field">
+
+                        <span class="sr-only">
+                            Password
+                        </span>
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            id="password"
+                            name="password"
+                            class="input"
+                            type="password"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required>
+
+                    </label>
+
+                    <div class="button-stack">
+
+                        <button
+                            id="signin"
+                            class="btn btn-primary"
+                            type="submit">
+
+                            <span>
+                                Unlock LifeOS
+                            </span>
+
+                            <i class="fa-solid fa-arrow-right"></i>
+
+                        </button>
+
+                        <a
+                            class="register-link"
+                            href="/register">
+
+                            Create account
+
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </section>
+
+    </main>
+
+    <script src="{{ url_for('static', path='js/clock.js') }}?v=life-lock-05"></script>
+
+    <script src="{{ url_for('static', path='js/transitions.js') }}?v=life-lock-04"></script>
+
+    <script src="{{ url_for('static', path='js/login.js') }}?v=life-lock-04"></script>
+
+</body>
+
+</html>

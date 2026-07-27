@@ -1,0 +1,284 @@
+/* =========================================================
+   LifeOS Theme v1.0
+   ========================================================= */
+
+:root{
+
+    /* ---------- COLORS ---------- */
+
+    --bg:#090b11;
+    --bg-secondary:#10141c;
+    --surface:#171c25;
+    --surface-2:#1d2330;
+    --surface-3:#252d3d;
+
+    --glass:rgba(24,29,39,.72);
+    --glass-strong:rgba(20,24,34,.88);
+
+    --accent:#8eaaff;
+    --accent-light:#b7c8ff;
+
+    --text:#f2f5ff;
+    --text-secondary:#c7cfde;
+    --text-muted:#8f9aae;
+
+    --success:#43d17a;
+    --warning:#ffb84d;
+    --danger:#ff6f7d;
+
+    --border:rgba(255,255,255,.08);
+
+    /* ---------- TYPOGRAPHY ---------- */
+
+    --font:'Inter',sans-serif;
+
+    --fw-light:300;
+    --fw-normal:400;
+    --fw-medium:500;
+    --fw-semibold:600;
+
+    --fs-display:72px;
+    --fs-h1:52px;
+    --fs-h2:36px;
+    --fs-h3:28px;
+
+    --fs-lg:20px;
+    --fs-md:16px;
+    --fs-sm:14px;
+    --fs-xs:12px;
+
+    /* ---------- SPACING ---------- */
+
+    --space-1:4px;
+    --space-2:8px;
+    --space-3:12px;
+    --space-4:16px;
+    --space-5:24px;
+    --space-6:32px;
+    --space-7:48px;
+    --space-8:64px;
+
+    /* ---------- RADIUS ---------- */
+
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:22px;
+    --radius-xl:30px;
+    --radius-round:999px;
+
+    /* ---------- SHADOWS ---------- */
+
+    --shadow-sm:
+        0 8px 18px rgba(0,0,0,.18);
+
+    --shadow-md:
+        0 16px 40px rgba(0,0,0,.28);
+
+    --shadow-lg:
+        0 25px 70px rgba(0,0,0,.40);
+
+    --shadow-glow:
+        0 0 40px rgba(142,170,255,.18);
+
+    /* ---------- ANIMATION ---------- */
+
+    --transition-fast:.18s;
+
+    --transition:.28s cubic-bezier(.22,1,.36,1);
+
+}
+
+/* ========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    font-size:16px;
+    height:100%;
+}
+
+body{
+
+    min-height:100vh;
+
+    font-family:var(--font);
+
+    color:var(--text);
+
+    background:var(--bg);
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 12%,
+            rgba(74,116,255,.18),
+            transparent 34%
+        ),
+
+        radial-gradient(
+            circle at 92% 86%,
+            rgba(74,116,255,.10),
+            transparent 40%
+        ),
+
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:
+
+        auto,
+
+        auto,
+
+        64px 64px,
+
+        64px 64px;
+
+}
+
+/* ========================================================= */
+
+h1{
+
+    font-size:clamp(48px,5vw,72px);
+
+    font-weight:300;
+
+    letter-spacing:-.05em;
+
+}
+
+h2{
+
+    font-size:clamp(36px,3vw,52px);
+
+    font-weight:300;
+
+}
+
+h3{
+
+    font-size:28px;
+
+    font-weight:400;
+
+}
+
+p{
+
+    color:var(--text-secondary);
+
+    line-height:1.7;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+button,
+input{
+
+    font-family:inherit;
+
+}
+
+img{
+
+    max-width:100%;
+
+    display:block;
+
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#30384b;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#46506b;
+
+}
+
+/* =========================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================= */
+
+@media(max-width:1100px){
+
+    :root{
+
+        --fs-display:60px;
+        --fs-h1:46px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    :root{
+
+        --fs-display:46px;
+        --fs-h1:38px;
+
+    }
+
+}

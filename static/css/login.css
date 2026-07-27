@@ -1,0 +1,350 @@
+/* LifeOS lock-screen polish — layout dimensions live in layout.css. */
+
+.life-lockscreen {
+    background: #080c17;
+}
+
+/* A quiet grid texture remains, but only reveals itself on close inspection. */
+body.life-lockscreen::before {
+    opacity: .042;
+    background:
+        linear-gradient(rgba(225, 234, 255, .72) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(225, 234, 255, .72) 1px, transparent 1px);
+    background-size: 72px 72px;
+}
+
+/* Atmospheric layers move as composited surfaces, not painted backgrounds. */
+.life-shell::before,
+.life-shell::after {
+    content: "";
+    position: absolute;
+    inset: -12%;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.life-shell::before {
+    background:
+        radial-gradient(ellipse 60% 56% at 25% 24%, rgba(94, 126, 226, .17), transparent 70%),
+        radial-gradient(ellipse 52% 48% at 76% 72%, rgba(125, 83, 183, .105), transparent 72%);
+    filter: blur(34px);
+    opacity: .68;
+    animation: ambient-drift 52s cubic-bezier(.45, 0, .55, 1) infinite alternate;
+}
+
+.life-shell::after {
+    background:
+        radial-gradient(ellipse 46% 42% at 58% 39%, rgba(117, 153, 246, .075), transparent 74%),
+        radial-gradient(ellipse 42% 38% at 32% 76%, rgba(86, 62, 150, .06), transparent 76%);
+    filter: blur(42px);
+    opacity: .8;
+    animation: blob-drift 43s cubic-bezier(.45, 0, .55, 1) infinite alternate-reverse;
+}
+
+.desktop-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 23%, rgba(2, 5, 13, .34) 100%);
+}
+
+.life-lockscreen .desktop-stage {
+    background: linear-gradient(135deg, #141d35 0%, #0d1221 48%, #080c17 100%);
+}
+
+.life-lockscreen .desktop-orb {
+    filter: blur(56px);
+    opacity: .42;
+    will-change: transform, opacity;
+}
+
+.life-lockscreen .desktop-orb--one {
+    background: rgba(95, 126, 224, .32);
+    animation: orb-drift-one 58s cubic-bezier(.45, 0, .55, 1) infinite alternate;
+}
+
+.life-lockscreen .desktop-orb--two {
+    background: rgba(129, 83, 181, .23);
+    animation: orb-drift-two 49s cubic-bezier(.45, 0, .55, 1) infinite alternate;
+}
+
+.life-lockscreen .lock-grain {
+    opacity: .028;
+    mix-blend-mode: soft-light;
+    will-change: transform, opacity;
+    animation: grain-drift 46s steps(10) infinite;
+}
+
+.life-lockscreen .lock-veil {
+    background: radial-gradient(ellipse at center, rgba(9, 14, 28, .08) 0%, rgba(5, 8, 18, .36) 100%);
+    backdrop-filter: blur(clamp(10px, 1.5vw, 24px)) saturate(.84);
+}
+
+.unlock-panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(45, 56, 90, .64), rgba(13, 18, 34, .72) 54%, rgba(25, 30, 53, .58));
+    border-color: rgba(221, 230, 255, .20);
+    box-shadow:
+        0 1.25rem 3.5rem rgba(0, 0, 0, .31),
+        0 .15rem .4rem rgba(0, 0, 0, .18),
+        inset 0 1px rgba(255, 255, 255, .13),
+        inset 0 -1px rgba(7, 11, 25, .22);
+    backdrop-filter: blur(30px) saturate(1.22);
+}
+
+.unlock-panel::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 105% 70% at 10% -8%, rgba(224, 233, 255, .15) 0%, rgba(196, 211, 255, .065) 40%, transparent 76%);
+    opacity: .92;
+}
+
+.unlock-panel__copy {
+    margin-bottom: 1.15rem;
+}
+
+.eyebrow {
+    margin-bottom: .45rem;
+    color: var(--accent-light);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.unlock-panel h1 {
+    font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1.14;
+    letter-spacing: -.052em;
+}
+
+.unlock-panel__copy > p:last-child {
+    margin-top: .58rem;
+    color: rgba(231, 236, 249, .66);
+    font-size: .82rem;
+    line-height: 1.55;
+}
+
+/* The clock remains a standalone component for the later shared-element sprint. */
+.life-clock {
+    cursor: default;
+    filter: drop-shadow(0 .8rem 1.25rem rgba(0, 0, 0, .25));
+    transform: translateZ(0);
+    will-change: transform, filter;
+    animation: clock-breathe 9s ease-in-out infinite;
+    transition: transform 280ms cubic-bezier(.22, 1, .36, 1), filter 280ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.clock-lockup {
+    position: relative;
+    isolation: isolate;
+}
+
+.clock-lockup::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: clamp(18rem, 38vw, 34rem);
+    aspect-ratio: 1;
+    left: 50%;
+    top: 42%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139, 166, 255, .105) 0%, rgba(111, 137, 224, .04) 35%, transparent 70%);
+    filter: blur(18px);
+    pointer-events: none;
+}
+
+.life-clock:hover {
+    animation-play-state: paused;
+    transform: translateZ(0) scale(1.02);
+    filter: drop-shadow(0 .85rem 1.55rem rgba(0, 0, 0, .3)) drop-shadow(0 0 1.35rem rgba(166, 188, 255, .19));
+}
+
+.life-clock .ring {
+    border-color: rgba(234, 240, 255, .94);
+    box-shadow: inset 0 0 1.4rem rgba(190, 207, 255, .13), 0 0 2.7rem rgba(139, 166, 255, .18);
+}
+
+.life-clock .dot {
+    background: #7896ee;
+    border-color: #edf2ff;
+    box-shadow: 0 0 0 3px rgba(150, 174, 255, .13), 0 0 .9rem rgba(178, 197, 255, .75);
+}
+
+.life-clock .hand {
+    will-change: transform;
+    transition: transform 620ms cubic-bezier(.22, 1, .36, 1), filter 280ms ease;
+}
+
+.life-clock #second {
+    transition-duration: 820ms;
+    transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+    filter: drop-shadow(0 0 .2rem rgba(186, 204, 255, .6));
+}
+
+.input {
+    cursor: text;
+    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.field i {
+    transition: transform 180ms cubic-bezier(.22, 1, .36, 1), color 180ms ease;
+}
+
+.field:hover .input {
+    background: rgba(28, 36, 62, .34);
+}
+
+.field:focus-within i {
+    color: var(--accent-light);
+    transform: translate(2px, -50%);
+}
+
+.field:focus-within .input {
+    border-color: rgba(177, 199, 255, .76);
+    box-shadow: 0 0 0 .25rem rgba(127, 159, 255, .13), 0 .55rem 1.3rem rgba(9, 14, 33, .16);
+}
+
+.input:focus::placeholder {
+    color: rgba(166, 174, 192, .58);
+}
+
+.btn-primary {
+    cursor: pointer;
+    transition: transform 180ms cubic-bezier(.22, 1, .36, 1), box-shadow 180ms ease, filter 180ms ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.035);
+    box-shadow: 0 1rem 2rem rgba(153, 178, 255, .38), 0 .2rem .5rem rgba(0, 0, 0, .16);
+}
+
+.btn-primary:active {
+    transform: translateY(0) scale(.965);
+    transition-duration: 100ms;
+}
+
+.lock-meta__mark,
+#digital {
+    will-change: transform, opacity;
+}
+
+.lock-meta__mark {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: logo-settle 7s ease-in-out infinite;
+    transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, padding 220ms cubic-bezier(.22,1,.36,1), letter-spacing 220ms ease;
+}
+
+.lock-meta__mark.is-wordmark {
+    width: auto;
+    padding-inline: .68rem;
+    letter-spacing: .02em;
+    background: rgba(255, 255, 255, .11);
+    border-color: rgba(218, 229, 255, .28);
+    box-shadow: 0 .5rem 1.4rem rgba(0, 0, 0, .14), inset 0 1px rgba(255, 255, 255, .08);
+}
+
+.lock-meta__mark:hover {
+    background: rgba(255, 255, 255, .12);
+    border-color: rgba(255, 255, 255, .32);
+    box-shadow: 0 .4rem 1rem rgba(0, 0, 0, .12);
+}
+
+#digital {
+    animation: time-breathe 8s ease-in-out infinite;
+}
+
+.unlocking .unlock-panel { pointer-events: none; }
+.unlocking .btn-primary { transform: scale(.94); filter: brightness(.96); }
+
+@keyframes clock-breathe {
+    0%, 100% { transform: translateZ(0) scale(1); }
+    50% { transform: translateZ(0) scale(1.01); }
+}
+
+@keyframes ambient-drift {
+    from { transform: translate3d(-1.5%, -1%, 0) scale(1.02); opacity: .62; }
+    to { transform: translate3d(1.5%, 1%, 0) scale(1.07); opacity: .79; }
+}
+
+@keyframes blob-drift {
+    from { transform: translate3d(1.5%, -1%, 0) scale(1.03); opacity: .68; }
+    to { transform: translate3d(-1.5%, 1.5%, 0) scale(1.08); opacity: .88; }
+}
+
+@keyframes orb-drift-one {
+    from { transform: translate3d(-2%, -1%, 0) scale(1); opacity: .34; }
+    to { transform: translate3d(3%, 2%, 0) scale(1.08); opacity: .48; }
+}
+
+@keyframes orb-drift-two {
+    from { transform: translate3d(2%, 2%, 0) scale(1.02); opacity: .28; }
+    to { transform: translate3d(-3%, -2%, 0) scale(1.1); opacity: .42; }
+}
+
+@keyframes grain-drift {
+    0% { transform: translate3d(-1%, -1%, 0); }
+    25% { transform: translate3d(1%, -2%, 0); }
+    50% { transform: translate3d(2%, 1%, 0); }
+    75% { transform: translate3d(-2%, 2%, 0); }
+    100% { transform: translate3d(-1%, -1%, 0); }
+}
+
+@keyframes logo-settle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-1px); }
+}
+
+@keyframes time-breathe {
+    0%, 100% { opacity: .76; }
+    50% { opacity: 1; }
+}
+
+@media (max-height: 820px) and (min-width: 701px) {
+    .clock { width: clamp(7.5rem, min(14vw, 22vh), 10.5rem); }
+    .unlock-panel { padding: 1rem; }
+    .unlock-panel__copy { margin-bottom: .7rem; }
+    .unlock-panel h1 { font-size: clamp(1.3rem, 2vw, 1.65rem); }
+    .unlock-panel__copy > p:last-child { margin-top: .35rem; }
+    .field { margin-top: .48rem; }
+    .input, .btn { min-height: 2.8rem; height: 2.8rem; }
+    .button-stack { gap: .65rem; margin-top: .75rem; }
+}
+
+@media (max-height: 640px) and (min-width: 701px) {
+    .clock { width: 7rem; }
+    .clock-date { display: none; }
+    .unlock-panel { padding: .85rem; }
+    .eyebrow { margin-bottom: .25rem; }
+    .unlock-panel__copy { margin-bottom: .45rem; }
+    .unlock-panel h1 { font-size: 1.25rem; }
+    .unlock-panel__copy > p:last-child { font-size: .75rem; }
+    .input, .btn { min-height: 2.55rem; height: 2.55rem; }
+    .register-link { font-size: .72rem; }
+}
+
+@media (max-width: 700px) {
+    .clock { width: clamp(7.75rem, 34vw, 10.5rem); }
+    .unlock-panel h1 { font-size: clamp(1.35rem, 6vw, 1.7rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .life-shell::before,
+    .life-shell::after,
+    .life-lockscreen .desktop-orb,
+    .life-lockscreen .lock-grain,
+    .life-clock,
+    .lock-meta__mark,
+    #digital { animation: none; }
+}
