@@ -6,7 +6,7 @@ class WindowManager {
     this.topZ = 20;
     this.labels = {
       calendar: 'Calendar', tasks: 'Tasks', notes: 'Notes', ai: 'AI Assistant',
-      habits: 'Habits', finance: 'Finance', weather: 'Weather', settings: 'Settings', notifications: 'Notifications', music: 'Music'
+      habits: 'Habits', finance: 'Finance', weather: 'Weather', settings: 'Settings', notifications: 'Notifications'
     };
     this.themes = [
       ['midnight', 'Midnight', 'Deep blue and violet'],
@@ -41,7 +41,7 @@ class WindowManager {
   create(app) {
     const title = this.labels[app] || app;
     const windowEl = document.createElement('section');
-    windowEl.className = `window is-opening${app === 'notes' ? ' window--notes' : ''}${app === 'habits' ? ' window--habits' : ''}${app === 'calendar' ? ' window--calendar' : ''}${app === 'settings' ? ' window--settings' : ''}${app === 'weather' ? ' window--weather' : ''}${app === 'tasks' ? ' window--tasks' : ''}${app === 'finance' ? ' window--finance' : ''}${app === 'notifications' ? ' window--notifications' : ''}${app === 'music' ? ' window--music' : ''}`;
+    windowEl.className = `window is-opening${app === 'notes' ? ' window--notes' : ''}${app === 'habits' ? ' window--habits' : ''}${app === 'calendar' ? ' window--calendar' : ''}${app === 'settings' ? ' window--settings' : ''}${app === 'weather' ? ' window--weather' : ''}${app === 'tasks' ? ' window--tasks' : ''}${app === 'finance' ? ' window--finance' : ''}${app === 'notifications' ? ' window--notifications' : ''}`;
     windowEl.addEventListener('animationend', event => {
       if (event.animationName === 'window-enter') windowEl.classList.remove('is-opening');
     });
@@ -55,7 +55,7 @@ class WindowManager {
           <button class="window-control window-control--close" type="button" aria-label="Close ${title}"><i class="fa-solid fa-xmark"></i></button>
         </div>
       </header>
-      <div class="window-content">${app === 'notes' ? this.notesContent() : app === 'habits' ? this.habitsContent() : app === 'calendar' ? this.calendarContent() : app === 'settings' ? this.settingsContent() : app === 'weather' ? this.weatherContent() : app === 'tasks' ? this.tasksContent() : app === 'finance' ? this.financeContent() : app === 'notifications' ? this.notificationsContent() : app === 'music' ? this.musicContent() : `<h2>${title}</h2><div class="empty-state">${title} is ready for your content.</div>`}</div>`;
+      <div class="window-content">${app === 'notes' ? this.notesContent() : app === 'habits' ? this.habitsContent() : app === 'calendar' ? this.calendarContent() : app === 'settings' ? this.settingsContent() : app === 'weather' ? this.weatherContent() : app === 'tasks' ? this.tasksContent() : app === 'finance' ? this.financeContent() : app === 'notifications' ? this.notificationsContent() : `<h2>${title}</h2><div class="empty-state">${title} is ready for your content.</div>`}</div>`;
     const offset = this.windows.size * 28;
 
     const taskButton = document.createElement('button');
@@ -77,7 +77,6 @@ class WindowManager {
     if (app === 'tasks') this.bindTasks(windowEl);
     if (app === 'finance') this.bindFinance(windowEl);
     if (app === 'notifications') this.bindNotifications(windowEl);
-    if (app === 'music') this.bindMusic(windowEl);
 
     windowEl.addEventListener('pointerdown', () => this.focus(windowEl));
     const minimizeButton = windowEl.querySelector('.window-control');
@@ -469,44 +468,6 @@ loadHabits();
     };
     refresh.addEventListener('click', load);
     load();
-  }
-
-  musicContent() {
-    return `<div class="music-app"><header class="music-header"><div><p>Now playing</p><h2>Visualizer</h2></div><i class="fa-solid fa-wave-square" aria-hidden="true"></i></header><form class="music-link-form"><input name="media" type="url" required placeholder="Paste a Spotify or YouTube link" aria-label="Spotify or YouTube link"><button type="submit"><i class="fa-solid fa-play"></i><span>Load</span></button></form><section class="music-stage"><div class="music-placeholder"><i class="fa-solid fa-headphones"></i><strong>Ready to listen</strong><span>Load a public Spotify track, playlist, or YouTube video.</span></div><iframe class="music-embed" title="Now playing" allow="autoplay; encrypted-media; picture-in-picture" hidden></iframe><div class="music-bars" aria-hidden="true">${'<i></i>'.repeat(32)}</div></section><p class="music-source" aria-live="polite">Paste a link to begin.</p></div>`;
-  }
-
-  bindMusic(windowEl) {
-    const form = windowEl.querySelector('.music-link-form');
-    const input = form.elements.media;
-    const embed = windowEl.querySelector('.music-embed');
-    const placeholder = windowEl.querySelector('.music-placeholder');
-    const source = windowEl.querySelector('.music-source');
-    const stage = windowEl.querySelector('.music-stage');
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      let url;
-      try { url = new URL(input.value.trim()); } catch (_) { return; }
-      let embedUrl = '';
-      let label = '';
-      if (/(^|\.)youtube\.com$/i.test(url.hostname) || url.hostname === 'youtu.be') {
-        const id = url.hostname === 'youtu.be' ? url.pathname.slice(1) : url.searchParams.get('v') || url.pathname.split('/').filter(Boolean).pop();
-        if (id) { embedUrl = `https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1`; label = 'YouTube video loaded'; }
-      } else if (/(^|\.)spotify\.com$/i.test(url.hostname)) {
-        const match = url.pathname.match(/^\/(track|album|playlist|episode)\/([^/?]+)/);
-        if (match) { embedUrl = `https://open.spotify.com/embed/${match[1]}/${match[2]}`; label = `Spotify ${match[1]} loaded`; }
-      }
-      if (!embedUrl) {
-        input.setCustomValidity('Use a public Spotify track, album, playlist, episode, or YouTube link.');
-        input.reportValidity();
-        return;
-      }
-      input.setCustomValidity('');
-      embed.src = embedUrl;
-      embed.hidden = false;
-      placeholder.hidden = true;
-      stage.classList.add('is-playing');
-      source.textContent = label;
-    });
   }
 
   tasksContent() {

@@ -44,7 +44,3 @@ document.querySelectorAll('[data-widget="weather"]').forEach(widget=>{
 document.querySelector('[data-widget="notifications"]')?.addEventListener('click',()=>{
  window.windowManager?.open('notifications');
 });
-
-document.querySelector('[data-widget="music"]')?.addEventListener('click',()=>{
- window.windowManager?.open('music');
-});
