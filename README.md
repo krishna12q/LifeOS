@@ -59,7 +59,7 @@ The frontend communicates with the FastAPI backend, which handles application lo
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/krishna12q/LifeOS.git
 cd LifeOS
 ```
 
